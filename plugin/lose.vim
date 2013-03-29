@@ -6,6 +6,8 @@ let g:loaded_lose = 1
 function! lose#lose(name)
    let rawPath = &path
    let pathDir = substitute(rawPath, "**", "", "g")
+   " find command takes space-separated paths, vim uses commas
+   let pathDir = substitute(pathDir, ",", " ", "g")
    let findOutput = system('find '.pathDir.' | grep "/'.a:name.'$"')
    let matchedFiles = split(findOutput, "\n")
 
