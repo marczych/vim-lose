@@ -15,7 +15,7 @@ function! lose#lose(name)
    elseif len(matchedFiles) == 1
       let fileToOpen = matchedFiles[0]
    else
-      let i = 0
+      let i = 1
       for file in matchedFiles
          echo i."\t".file
          let i+= 1
@@ -23,12 +23,12 @@ function! lose#lose(name)
 
       let selection = str2nr(input("Which file number? "))
 
-      if selection > len(matchedFiles)
+      if selection > len(matchedFiles) || selection < 1
          echo selection." is out of range!"
          return
       endif
 
-      let fileToOpen = matchedFiles[selection]
+      let fileToOpen = matchedFiles[selection-1]
    endif
 
    execute "e ".fileToOpen
