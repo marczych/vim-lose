@@ -25,7 +25,10 @@ function! lose#lose(name)
 
       let selection = str2nr(input("Which file number? "))
 
-      if selection > len(matchedFiles) || selection < 1
+      if selection < 1
+         " Any non-numeric input to str2nr becomes 0 which we now convert to 1.
+         let selection = 1
+      elseif selection > len(matchedFiles)
          echo selection." is out of range!"
          return
       endif
