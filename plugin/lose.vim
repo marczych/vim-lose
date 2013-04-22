@@ -1,8 +1,3 @@
-if exists('g:loaded_lose')
-  finish
-endif
-let g:loaded_lose = 1
-
 function! lose#lose(name)
    let rawPath = &path
    let pathDir = substitute(rawPath, "**", "", "g")
