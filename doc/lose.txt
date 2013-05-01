@@ -13,12 +13,17 @@ These commands work based on the 'path' option regardless of the current working
 directory.
 
                                                 *lose-:Lose*
-:Lose [fileName]        Functionally equivalent to vim's built-in find command
+:Lose [fileName] [lineNumber]
+                        Functionally equivalent to vim's built-in find command
                         with a few differences. First, if multiple files match
                         the search, the user selects which one to open. Second,
-                        globbing is supported so "*.txt" is a valid query.
+                        globbing is supported so "*.txt" is a valid query. The
+                        lineNumber argument is optional. If provided, the file
+                        will be opened to that line.
 
 ABOUT                                           *lose-about*
 
 Since this is a work in progress, there is still much more to do. Feel free to
 to fork this project and hack away!
+
+https://github.com/marczych/vim-lose

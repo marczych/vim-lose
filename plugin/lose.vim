@@ -1,4 +1,4 @@
-function! lose#lose(name)
+function! lose#lose(name, ...)
    let rawPath = &path
    let pathDir = substitute(rawPath, "**", "", "g")
    " find command takes space-separated paths, vim uses commas
@@ -32,6 +32,11 @@ function! lose#lose(name)
    endif
 
    execute "e ".fileToOpen
+
+   " The second argument, if provided, is the line number to jump to.
+   if a:0 > 0
+      execute "normal ".a:1."G"
+   endif
 endfunc
 
-command! -nargs=1 Lose call lose#lose(<q-args>)
+command! -nargs=* Lose call lose#lose(<f-args>)
