@@ -3,7 +3,23 @@ function! lose#lose(name, ...)
    let pathDir = substitute(rawPath, "**", "", "g")
    " find command takes space-separated paths, vim uses commas
    let pathDir = substitute(pathDir, ",", " ", "g")
-   let findOutput = system('find '.pathDir.' | grep "/'.a:name.'$"')
+
+   " If the search pattern has a / or * then we want to match on whole-name
+   " so path-parts are matched.
+   let matchWholeName = match(a:name, '[*/]') >= 0
+   let fieldName = matchWholeName ? 'wholename' : 'name'
+
+   " If the search pattern is all lowercase, make the search case insensitive
+   if tolower(a:name) ==# a:name
+      let fieldName = 'i'.fieldName
+   endif
+
+   " Lets be safe about this
+   let name = shellescape('*'.a:name.'*') 
+   let exclusions = ' -not -name "*.sw?" -not -wholename "*/.git/*" '
+   let otherOptions = exclusions . ' ' . ' -type f'
+   let findCmd = 'find '.pathDir.' -'.fieldName.' '.name.otherOptions
+   let findOutput = system(findCmd)
    let matchedFiles = split(findOutput, "\n")
 
    if len(matchedFiles) == 0
