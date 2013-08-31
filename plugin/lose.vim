@@ -15,7 +15,7 @@ function! lose#lose(name, ...)
    endif
 
    " Lets be safe about this
-   let name = shellescape('*'.a:name.'*') 
+   let name = shellescape('*'.a:name.'*')
    let exclusions = lose#getFileExclusions()
    let otherOptions = exclusions . ' ' . ' -type f'
    let findCmd = 'find '.pathDir.' -'.fieldName.' '.name.otherOptions
@@ -61,7 +61,7 @@ function! lose#getFileExclusions()
 
    " Include wildignore files too.
    for file in split(&wildignore, ',')
-      let exclusions = exclusions . ' -not -name "' . shellescape(file) . '" '
+      let exclusions = exclusions . ' -not -name ' . shellescape(file) . ' '
    endfor
 
    return exclusions
