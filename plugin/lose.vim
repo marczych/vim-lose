@@ -1,4 +1,4 @@
-function! lose#lose(name, ...)
+function! lose#findAndOpenFile(command, name, ...)
    let rawPath = &path
    let pathDir = substitute(rawPath, "**", "", "g")
    " find command takes space-separated paths, vim uses commas
@@ -47,7 +47,7 @@ function! lose#lose(name, ...)
       let fileToOpen = matchedFiles[selection-1]
    endif
 
-   execute "e ".fileToOpen
+   execute a:command." ".fileToOpen
 
    " The second argument, if provided, is the line number to jump to.
    if a:0 > 0
@@ -67,4 +67,13 @@ function! lose#getFileExclusions()
    return exclusions
 endfunc
 
+function! lose#lose(...)
+   call call('lose#findAndOpenFile', ['e'] + a:000)
+endfunc
+
+function! lose#tablose(...)
+   call call('lose#findAndOpenFile', ['tabe'] + a:000)
+endfunc
+
 command! -nargs=* Lose call lose#lose(<f-args>)
+command! -nargs=* TabLose call lose#tablose(<f-args>)
