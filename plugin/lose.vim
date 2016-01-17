@@ -18,7 +18,8 @@ function! lose#findAndOpenFile(command, name, ...)
    let name = shellescape('*'.a:name.'*')
    let exclusions = lose#getFileExclusions()
    let otherOptions = exclusions . ' ' . ' -type f'
-   let findCmd = 'find '.pathDir.' -'.fieldName.' '.name.otherOptions
+   let ignoreErrors = ' 2> /dev/null '
+   let findCmd = 'find '.pathDir.' -'.fieldName.' '.name.otherOptions.ignoreErrors
    let findOutput = system(findCmd)
    let matchedFiles = split(findOutput, "\n")
 
